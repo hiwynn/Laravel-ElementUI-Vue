@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('api')->post('/phone/search', 'PhoneListController@search');
+Route::middleware('api')->post('/phone/add', 'PhoneListController@add');
+Route::middleware('api')->post('/phone/delete/{id}', 'PhoneListController@deletePhone');
+Route::middleware('api')->post('/phone/update/{id}', 'PhoneListController@updatePhone');
 
 
 

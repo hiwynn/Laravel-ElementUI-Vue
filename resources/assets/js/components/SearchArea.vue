@@ -10,8 +10,13 @@
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
             </el-form-item>
+            <el-form-item>
+                <el-button type="success" @click="addPhone">添加</el-button>
+            </el-form-item>
         </el-form>
-        <h4 v-if="hasResult && init">搜索结果：</h4>
+        <add-dialog v-bind:showAddDialog="showAddDialog" v-bind:tableData="tableData"
+                    @hideAddDialog="hideAddDialog"></add-dialog>
+        <!--<h4 v-if="hasResult && init">搜索结果：</h4>-->
         <default-list v-if="hasResult || !init" v-bind:phone="tableData"></default-list>
         <div v-if="!hasResult && init">
             暂无查询结果
@@ -23,14 +28,15 @@
         props  : ['phone'],
         data() {
             return {
-                formInline  : {
+                formInline   : {
                     user  : '',
                     number: ''
                 },
-                searchResult: [],
-                hasResult   : false,
-                init        : false,
-                tableData   : JSON.parse(this.phone)
+                searchResult : [],
+                hasResult    : false,
+                init         : false,
+                tableData    : JSON.parse(this.phone),
+                showAddDialog: false
             }
         },
         methods: {
@@ -44,6 +50,15 @@
                     _this.tableData = res.data;
                     _this.hasResult = _this.tableData.length;
                 })
+            },
+            addPhone() {
+                this.showAddDialog = true;
+            },
+            hideAddDialog(data) {
+                if (data) {
+                    this.tableData.push(data);
+                }
+                this.showAddDialog = false;
             }
         }
     }
