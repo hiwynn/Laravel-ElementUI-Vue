@@ -25,4 +25,3 @@ Route::middleware('api')->post('/phone/update/{id}', 'PhoneListController@update
 
 
 
-

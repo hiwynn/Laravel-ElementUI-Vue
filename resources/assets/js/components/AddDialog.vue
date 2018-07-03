@@ -27,7 +27,7 @@
             <el-button @click="cancelAdd">取 消</el-button>
             <el-button type="primary" @click="confirmAdd"
                        v-bind:disabled="addForm.title === '' || addForm.number === ''">确 定</el-button>
-          </span>
+        </span>
     </el-dialog>
 </template>
 
@@ -91,17 +91,21 @@
             },
             confirmAdd() {
                 let _this = this;
-                for (var i = 0; i < this.tableData.length; i++) {
-                    if (this.tableData[i].phone_number == this.addForm.number && this.tableData[i].id != this.currentPhone.id) {
-                        this.repeatNumber = true;
-                        return;
-                    }
-                    if (this.tableData[i].title == this.addForm.title && this.tableData[i].id != this.currentPhone.id) {
-                        this.repeatTitle = true;
-                        return;
-                    }
-                }
                 if (this.currentPhone) {
+                    for (var i = 0; i < this.tableData.length; i++) {
+                        if (this.tableData[i].phone_number == this.addForm.number && this.tableData[i].id != this.currentPhone.id) {
+                            this.repeatNumber = true;
+                            return;
+                        } else {
+                            this.repeatNumber = false;
+                        }
+                        if (this.tableData[i].title == this.addForm.title && this.tableData[i].id != this.currentPhone.id) {
+                            this.repeatTitle = true;
+                            return;
+                        } else {
+                            this.repeatTitle = false;
+                        }
+                    }
                     axios.post('/api/phone/update/' + this.currentPhone.id, {
                         title : this.addForm.title,
                         number: this.addForm.number
@@ -117,6 +121,14 @@
                         if (this.tableData[i].phone_number == this.addForm.number) {
                             this.repeatNumber = true;
                             return;
+                        } else {
+                            this.repeatNumber = false;
+                        }
+                        if (this.tableData[i].title == this.addForm.title) {
+                            this.repeatTitle = true;
+                            return;
+                        } else {
+                            this.repeatTitle = false;
                         }
                     }
                     axios.post('/api/phone/add', {

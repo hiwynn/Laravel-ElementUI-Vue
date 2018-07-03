@@ -121,6 +121,7 @@
             hideAddDialog(data) {
                 this.showAddDialog = false;
                 if (data) {
+                    console.log(data);
                     this.phone.splice(this.editIndex, 1, data);
                 }
             }

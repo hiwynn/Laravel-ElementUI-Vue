@@ -1,6 +1,16 @@
-
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
+
+window.Vue = require('vue');
+
+require('vue-resource');
+
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+    request.headers.set('Authorization', Laravel.apiToken);
+
+    next();
+});
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -12,7 +22,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

@@ -18,6 +18,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('default-list', require('./components/DefaultList.vue'));
 Vue.component('search-area', require('./components/SearchArea.vue'));
 Vue.component('add-dialog', require('./components/AddDialog.vue'));
+Vue.component('import-dialog', require('./components/ImportDialog.vue'));
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
