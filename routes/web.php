@@ -16,8 +16,12 @@
 //});
 
 Route::get('/', 'PhoneListController@index');
+//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'PhoneListController@index');
+
+Route::get('/manage-user', 'ManageUserController@index');
 
 Auth::routes();
 
-Route::get('/excel/export','ExcelController@exportPhone');
-Route::post('/excel/import','ExcelController@importPhone');
+Route::get('/excel/export', 'ExcelController@exportPhone');
+Route::post('/excel/import', 'ExcelController@importPhone');

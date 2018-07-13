@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\PhoneList;
+use App\Policies\PhonePolicy;
+use App\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        PhoneList::class => PhonePolicy::class,
     ];
 
     /**
@@ -21,10 +25,22 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(GateContract $gate)
     {
-        $this->registerPolicies();
+        $this->registerPolicies($gate);
 
-        //
+        $gate->define(
+            'show-phone',
+            function ($user) {
+                return $user->is_active;
+            }
+        );
+
+        $gate->define(
+            'super-admin',
+            function ($user) {
+                return $user->roleId === User::SUPER_ADMIN;
+            }
+        );
     }
 }

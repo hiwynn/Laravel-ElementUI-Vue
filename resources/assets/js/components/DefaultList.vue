@@ -38,6 +38,7 @@
                     label="号码">
             </el-table-column>
             <el-table-column
+                    v-if="cudPermisson"
                     label="操作"
                     width="160">
                 <template slot-scope="scope">
@@ -80,7 +81,7 @@
 
 <script>
     export default {
-        props  : ['phone'],
+        props  : ['phone', 'cudPermisson'],
         data() {
             return {
                 showAddDialog: false,

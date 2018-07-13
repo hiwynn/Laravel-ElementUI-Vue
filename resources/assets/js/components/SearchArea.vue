@@ -7,7 +7,7 @@
             <el-form-item label="号码">
                 <el-input v-model="formInline.number" clearable placeholder="号码"></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item v-if="cudPermisson">
                 <el-button type="success" @click="addPhone">添加</el-button>
                 <a href="/excel/export" class="el-button el-button--info">导出</a>
                 <el-button type="info" @click="importPhone">导入</el-button>
@@ -18,6 +18,7 @@
         <add-dialog v-bind:showAddDialog="showAddDialog" v-bind:tableData="tableData"
                     @hideAddDialog="hideAddDialog"></add-dialog>
         <default-list v-if="hasResult || !init"
+                      v-bind:cudPermisson="cudPermisson"
                       v-bind:phone="filterResult.slice((currentPage-1)*pageSize,currentPage*pageSize)"></default-list>
         <div style="text-align: center; margin-top: 20px;">
             <el-pagination
@@ -34,25 +35,38 @@
 </template>
 <script>
     export default {
-        props  : ['phone'],
+        props: ['phone'],
+        mounted() {
+            let _this = this;
+            axios.get('/api/user').then(function (res) {
+                console.log(res);
+                _this.currentUser = res.data;
+                if (_this.currentUser.roleId == 3) {
+                    _this.cudPermisson = false;
+                    console.log(_this.cudPermisson);
+                }
+            })
+        },
         data() {
             return {
-                formInline      : {
-                    title : '',
+                formInline: {
+                    title: '',
                     number: ''
                 },
-                hasResult       : false,
-                init            : false,
-                tableData       : JSON.parse(this.phone),
-                filterResult    : JSON.parse(this.phone),
-                amount          : JSON.parse(this.phone).length,
-                currentPage     : 1,
-                pageSize        : 10,
-                showAddDialog   : false,
-                showImportDialog: false
+                hasResult: false,
+                init: false,
+                tableData: JSON.parse(this.phone),
+                filterResult: JSON.parse(this.phone),
+                amount: JSON.parse(this.phone).length,
+                currentPage: 1,
+                pageSize: 10,
+                showAddDialog: false,
+                showImportDialog: false,
+                currentUser: {},
+                cudPermisson: true
             }
         },
-        watch  : {
+        watch: {
             formInline: {
                 handler: function (newVal) {
                     this.filterResult = this.tableData.filter(function (item) {
@@ -75,7 +89,7 @@
                     });
                     this.amount = this.filterResult.length;
                 },
-                deep   : true
+                deep: true
             }
         },
         methods: {
@@ -88,7 +102,7 @@
                 }
                 this.showAddDialog = false;
             },
-            hideImportDialog () {
+            hideImportDialog() {
                 this.showImportDialog = false;
             },
             handleSizeChange(size) {

@@ -9,13 +9,17 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const SUPER_ADMIN = 1;
+    const ADMIN_ID = 2;
+    const COMMON_USER = 3;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'api_token', 'roleId', 'is_active'
     ];
 
     /**
@@ -26,4 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function isSuperAdmin($user)
+    {
+        return $user->roleId == self::SUPER_ADMIN;
+    }
 }

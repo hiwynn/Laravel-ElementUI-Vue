@@ -8,16 +8,25 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Phone') }}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script>
+        window.Laravel = <?php echo json_encode(
+            [
+                'csrfToken' => csrf_token()
+            ]
+        ); ?>;
+        Laravel.apiToken = "{{ Auth::check() ? 'Bearer '.Auth::user()->api_token : 'Bearer ' }}";
+    </script>
 
 </head>
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Logo</a>
+            <a class="navbar-brand" href="{{ url('/') }}">查询电话</a>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
@@ -33,8 +42,9 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/setting">个人设置</a>
-                                <a class="dropdown-item" href="/avatar">修改头像</a>
+                                @can('super-admin')
+                                    <a class="dropdown-item" href="/manage-user">管理用户</a>
+                                @endcan
                                 <a class="dropdown-item" href="/password">修改密码</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -59,12 +69,5 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
-<script>
-	window.Laravel = <?php echo json_encode(
-		[
-			'csrfToken' => csrf_token()
-		]
-	); ?>;
-</script>
 </body>
 </html>
