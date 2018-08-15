@@ -25,3 +25,4 @@ Auth::routes();
 
 Route::get('/excel/export', 'ExcelController@exportPhone');
 Route::post('/excel/import', 'ExcelController@importPhone');
+Route::get('/excel/export/template', 'ExcelController@exportTemplate');

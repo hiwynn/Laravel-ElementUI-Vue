@@ -74,4 +74,17 @@ class ExcelController extends Controller
         }
         return Redirect::to('/')->withSuccess("导入成功");
     }
+
+    public function exportTemplate()
+    {
+        $cellData = [
+            ['title', 'description', 'phone_number'],
+            ['Title', 'Description', 'PhoneNumber']
+        ];
+        Excel::create('电话簿模板', function ($excel) use ($cellData) {
+            $excel->sheet('phone', function ($sheet) use ($cellData) {
+                $sheet->rows($cellData);
+            });
+        })->export('xls');
+    }
 }

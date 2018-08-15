@@ -53694,7 +53694,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
         axios.get('/api/user').then(function (res) {
-            console.log(res);
             _this.currentUser = res.data;
             if (_this.currentUser.roleId == 3) {
                 _this.cudPermisson = false;
@@ -53725,6 +53724,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     watch: {
         formInline: {
             handler: function handler(newVal) {
+                this.currentPage = 1;
                 this.filterResult = this.tableData.filter(function (item) {
                     if (newVal.title == "") {
                         if (newVal.number == "") {
@@ -54404,6 +54404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['showImportDialog'],
@@ -54420,6 +54421,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleClose: function handleClose() {
             this.hideImportDialog();
         },
+        downloadTemplate: function downloadTemplate() {},
         cancelImport: function cancelImport() {
             this.hideImportDialog();
         },
@@ -54491,6 +54493,15 @@ var render = function() {
               }
             }
           }),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "el-button el-button--default",
+              attrs: { href: "/excel/export/template" }
+            },
+            [_vm._v("下载导入模板")]
+          ),
           _vm._v(" "),
           _c(
             "span",

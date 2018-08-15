@@ -39,7 +39,6 @@
         mounted() {
             let _this = this;
             axios.get('/api/user').then(function (res) {
-                console.log(res);
                 _this.currentUser = res.data;
                 if (_this.currentUser.roleId == 3) {
                     _this.cudPermisson = false;
@@ -69,6 +68,7 @@
         watch: {
             formInline: {
                 handler: function (newVal) {
+                    this.currentPage = 1;
                     this.filterResult = this.tableData.filter(function (item) {
                         if (newVal.title == "") {
                             if (newVal.number == "") {
