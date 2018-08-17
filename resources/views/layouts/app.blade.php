@@ -45,7 +45,7 @@
                                 @can('super-admin')
                                     <a class="dropdown-item" href="/manage-user">管理用户</a>
                                 @endcan
-                                <a class="dropdown-item" href="/password">修改密码</a>
+                                {{--<a class="dropdown-item" href="/password">修改密码</a>--}}
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     退出登录
