@@ -42,7 +42,6 @@
                 _this.currentUser = res.data;
                 if (_this.currentUser.roleId == 3) {
                     _this.cudPermisson = false;
-                    console.log(_this.cudPermisson);
                 }
             })
         },
